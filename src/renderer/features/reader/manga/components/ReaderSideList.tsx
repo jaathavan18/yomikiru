@@ -184,7 +184,8 @@ const ReaderSideList = memo(
             if (effectiveListForNav.length >= 0 && mangaInReader) {
                 const index = effectiveListForNav.findIndex((e) => e.link === mangaInReader.progress?.chapterLink);
                 const prevCh = index <= 0 ? "~" : effectiveListForNav[index - 1].link;
-                const nextCh = index >= effectiveListForNav.length - 1 ? "~" : effectiveListForNav[index + 1].link;
+                const nextCh =
+                    index < 0 || index >= effectiveListForNav.length - 1 ? "~" : effectiveListForNav[index + 1].link;
                 if (appSettings.locationListSortType === "inverse" && !isShuffleMode) {
                     setPrevNextChapter({ prev: nextCh, next: prevCh });
                 } else {
