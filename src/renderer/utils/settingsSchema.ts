@@ -53,6 +53,7 @@ const settingSchema = z
 
         showPageCountInSideList: z.boolean(),
         showTextFileBadge: z.boolean(),
+        showDateInList: z.boolean(),
 
         //styles end
 
@@ -283,6 +284,7 @@ const settingSchema = z
         confirmDeleteItem: true,
         showPageCountInSideList: true,
         showTextFileBadge: true,
+        showDateInList: true,
         readerSettings: {
             readerWidth: 60,
             variableImageSize: true,

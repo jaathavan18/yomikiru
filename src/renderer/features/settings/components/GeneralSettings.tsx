@@ -469,6 +469,20 @@ const GeneralSettings: React.FC = () => {
                         labelAfter="Show text files badge in Side-List"
                     />
                 </div>
+                <div className="toggleItem">
+                    <InputCheckbox
+                        checked={appSettings.showDateInList}
+                        className="noBG"
+                        onChange={(e) => {
+                            dispatch(
+                                setAppSettings({
+                                    showDateInList: e.currentTarget.checked,
+                                }),
+                            );
+                        }}
+                        labelAfter="Show date and time in Bookmarks and Notes"
+                    />
+                </div>
             </div>
             <div className="settingItem2 dangerZone">
                 <h3>Reset</h3>

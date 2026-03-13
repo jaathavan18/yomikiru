@@ -14,6 +14,7 @@ const BookmarkList: React.FC<{
 }> = ({ openChapterById }) => {
     const { setContextMenuData } = useAppContext();
     const bookInReader = useAppSelector(getReaderBook);
+    const showDateInList = useAppSelector((store) => store.appSettings.showDateInList);
     const bookmarksArray: BookBookmark[] = useAppSelector(
         (store) =>
             [...((bookInReader && store.bookmarks.book[bookInReader.link]) || [])].sort(
@@ -78,11 +79,13 @@ const BookmarkList: React.FC<{
                 }}
             >
                 <span className="text">{bookmark.chapterName}</span>
-                <span className="date" title={bookmark.createdAt.toString()}>
-                    {dateUtils.format(bookmark.createdAt, {
-                        format: dateUtils.presets.dateTime,
-                    })}
-                </span>
+                {showDateInList && (
+                    <span className="date" title={bookmark.createdAt.toString()}>
+                        {dateUtils.format(bookmark.createdAt, {
+                            format: dateUtils.presets.dateTime,
+                        })}
+                    </span>
+                )}
             </ListItem>
         );
     };

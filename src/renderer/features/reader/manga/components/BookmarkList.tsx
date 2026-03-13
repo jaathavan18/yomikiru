@@ -12,6 +12,7 @@ import { useAppContext } from "src/renderer/App";
 const BookmarkList: React.FC = () => {
     const { setContextMenuData, openInReader } = useAppContext();
     const mangaInReader = useAppSelector(getReaderManga);
+    const showDateInList = useAppSelector((store) => store.appSettings.showDateInList);
     const bookmarksArray: MangaBookmark[] = useAppSelector(
         (store) =>
             [...((mangaInReader && store.bookmarks.manga[mangaInReader.link]) || [])].sort(
@@ -88,11 +89,13 @@ const BookmarkList: React.FC = () => {
                         {bookmark.page}/{mangaInReader?.progress?.totalPages}
                     </span>
                 </span>
-                <span className="date" title={bookmark.createdAt.toString()}>
-                    {dateUtils.format(bookmark.createdAt, {
-                        format: dateUtils.presets.dateTime,
-                    })}
-                </span>
+                {showDateInList && (
+                    <span className="date" title={bookmark.createdAt.toString()}>
+                        {dateUtils.format(bookmark.createdAt, {
+                            format: dateUtils.presets.dateTime,
+                        })}
+                    </span>
+                )}
             </ListItem>
         );
     };

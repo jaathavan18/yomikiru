@@ -126,6 +126,7 @@ const NotesList: React.FC<{
 }> = ({ openChapterById, addNote, editNoteId, setEditNoteId }) => {
     const { setContextMenuData } = useAppContext();
     const confirmDeleteItem = useAppSelector((store) => store.appSettings.confirmDeleteItem, shallowEqual);
+    const showDateInList = useAppSelector((store) => store.appSettings.showDateInList);
     const dispatch = useAppDispatch();
     const bookInReader = useAppSelector(getReaderBook);
 
@@ -245,11 +246,13 @@ const NotesList: React.FC<{
                         >
                             {note.selectedText}
                         </span>
-                        <span className="date" title={note.createdAt.toString()}>
-                            {dateUtils.format(note.createdAt, {
-                                format: dateUtils.presets.dateTime,
-                            })}
-                        </span>
+                        {showDateInList && (
+                            <span className="date" title={note.createdAt.toString()}>
+                                {dateUtils.format(note.createdAt, {
+                                    format: dateUtils.presets.dateTime,
+                                })}
+                            </span>
+                        )}
                     </div>
                 </ListItem>
             );
