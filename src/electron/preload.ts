@@ -90,7 +90,7 @@ const electronAPI = {
     },
     readText: clipboard.readText,
     writeText: clipboard.writeText,
-    copyImage: (imagePath: string) => clipboard.writeImage(nativeImage.createFromPath(imagePath)),
+    copyImage: (dataUrl: string) => clipboard.writeImage(nativeImage.createFromDataURL(dataUrl)),
     openExternal: (url: string) => shell.openExternal(url),
     showItemInFolder: (path: string) => shell.showItemInFolder(path),
     webFrame: {

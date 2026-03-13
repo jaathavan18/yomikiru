@@ -306,7 +306,27 @@ const App = (): ReactElement => {
                     label: "Copy Image",
                     disabled: !url,
                     action() {
-                        window.electron.copyImage(url.replace("file://", ""));
+                        const filePath = decodeURIComponent(
+                            url.replace(/^file:\/\//, "").replace(/^\/([A-Za-z]:)/, "$1"),
+                        );
+                        window.alert("url=" + url + "\nfilePath=" + filePath);
+                        window.fs.readFile(filePath).then((buffer) => {
+                            window.alert("readFile ok, size=" + buffer.byteLength);
+                            const blob = new Blob([buffer]);
+                            createImageBitmap(blob).then((bitmap) => {
+                                window.alert("bitmap ok " + bitmap.width + "x" + bitmap.height);
+                                const canvas = document.createElement("canvas");
+                                canvas.width = bitmap.width;
+                                canvas.height = bitmap.height;
+                                const ctx = canvas.getContext("2d");
+                                if (!ctx) return;
+                                ctx.drawImage(bitmap, 0, 0);
+                                bitmap.close();
+                                const dataUrl = canvas.toDataURL("image/png");
+                                window.alert("dataUrl length=" + dataUrl.length);
+                                window.electron.copyImage(dataUrl);
+                            }).catch((e: unknown) => window.alert("createImageBitmap failed: " + e));
+                        }).catch((e: unknown) => window.alert("readFile failed: " + e));
                     },
                 };
             },
